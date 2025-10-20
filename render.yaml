@@ -7,3 +7,4 @@ services:
       apt-get update && apt-get install -y poppler-utils tesseract-ocr
       pip install -r requirements.txt
     startCommand: uvicorn ocr_api:app --host 0.0.0.0 --port $PORT
+    dockerBaseImage: ubuntu:22.04
