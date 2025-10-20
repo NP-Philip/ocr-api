@@ -33,10 +33,11 @@ async def ocr_file(
 
     # --- PDF handling ---
     # If the file name ends with ".pdf", it's treated as a PDF file.
-    # Convert it to a list of image objects (one image per page).
-    # The `dpi=300` means good OCR quality; `poppler_path` is where Poppler is installed.
+    # On Render (and most Linux environments), Poppler is installed via 'poppler-utils'
+    # and automatically available in PATH, so we don’t need to manually specify poppler_path.
+    # Convert the PDF to a list of image objects (one image per page).
     if file.filename.lower().endswith(".pdf"):
-        images = convert_from_bytes(data, dpi=300, poppler_path=r"C:\poppler\Library\bin")
+        images = convert_from_bytes(data, dpi=300)
 
     # --- Image handling ---
     # If it's not a PDF (e.g., PNG, JPG, etc.), open it directly as an image.
@@ -61,3 +62,4 @@ async def ocr_file(
     # Return the OCR result as a JSON response.
     # FastAPI automatically converts this Python dict into JSON.
     return {"text": all_text}
+
